@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         }
 
         const { object } = await generateObject({
-            model: openai("gpt-5.2"),
+            model: openai("openai/gpt-5.2"),
             schema: z.object({
                 linkedInPost: z.string().describe("A professional LinkedIn post with a hook, body with line breaks, and a clear CTA."),
                 instagramCaption: z.string().describe("A short, punchy Instagram caption with emojis."),

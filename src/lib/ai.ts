@@ -3,4 +3,6 @@ import { env } from "@/recast/env";
 
 export const openai = createOpenAI({
     apiKey: env.OPENAI_API_KEY,
+    baseURL: "https://openrouter.ai/api/v1",
 });
+// https://openrouter.ai/api/v1
