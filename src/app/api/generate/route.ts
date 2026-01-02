@@ -7,7 +7,7 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
     try {
-        const { article } = await req.json();
+        const { article } = await req.json() as { article: string };
 
         if (!article) {
             return new Response("Article content is required", { status: 400 });
@@ -31,6 +31,6 @@ export async function POST(req: Request) {
         });
     } catch (error) {
         console.error("Error generating content:", error);
-        return new Response("Internal Server Error", { status: 500 });
+        return new Response("Internal Server Error", { status: 500 } as ResponseInit);
     }
 }

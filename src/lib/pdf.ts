@@ -1,25 +1,20 @@
 import puppeteer from "puppeteer";
 
 export async function generateCarouselPdf(slides: string[]) {
-    const browser = await puppeteer.launch({
-        headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    const page = await browser.newPage();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+  const page = await browser.newPage();
 
-    // Set viewport to a typical carousel slide aspect ratio (e.g., 1080x1350 vertical or 1080x1080 square)
-    // LinkedIn carousels are often documents, A4 or square. Let's send square for now or 4:5.
-    // We'll generate a single PDF with multiple pages.
-
-    // HTML Content generation
-    const htmlContent = `
+  const htmlContent = `
     <html>
       <head>
         <style>
           body { margin: 0; padding: 0; font-family: sans-serif; }
           .slide { 
             width: 800px; 
-            height: 1000px; 
+            height: 800px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -38,29 +33,29 @@ export async function generateCarouselPdf(slides: string[]) {
       </head>
       <body>
         ${slides
-            .map(
-                (slide) => `
+      .map(
+        (slide) => `
           <div class="slide">
             <div>
               ${slide}
             </div>
           </div>
         `
-            )
-            .join("")}
+      )
+      .join("")}
       </body>
     </html>
   `;
 
-    await page.setContent(htmlContent);
+  await page.setContent(htmlContent);
 
-    const pdfBuffer = await page.pdf({
-        width: "800px",
-        height: "1000px",
-        printBackground: true,
-    });
+  const pdfBuffer = await page.pdf({
+    width: "800px",
+    height: "800px",
+    printBackground: true,
+  });
 
-    await browser.close();
+  await browser.close();
 
-    return Buffer.from(pdfBuffer).toString("base64");
+  return Buffer.from(pdfBuffer).toString("base64");
 }
